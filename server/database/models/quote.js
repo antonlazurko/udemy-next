@@ -4,17 +4,12 @@ const QuoteCategory = require('./quoteCategory');
 const Category = require('./category');
 
 const Quote = sequelize.define('Quote', {
-  quote: {
+  text: {
     type: DataTypes.TEXT,
     allowNull: false,
   },
   author: {
     type: DataTypes.STRING,
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: DataTypes.NOW,
   },
 });
 
