@@ -6,7 +6,7 @@ const Category = require('../models/category');
 const sequelize = require('../models');
 
 const CSV_FILENAME = path.resolve(__dirname, '../data/quotes.csv');
-const BATCH_SIZE = 5000;
+const BATCH_SIZE = 2000;
 const BATCH_TIMEOUT = 30000;
 
 function validateAndSplitCategories(categoriesStr) {
