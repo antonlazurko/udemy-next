@@ -12,7 +12,7 @@ In order to populate Database you have two options:
 
 ## Import quotes from the CSV
 
-1. Change directory to the `database/seed` folder
+1. Change directory to the `src/database/seed` folder
 1. Run `importQuotes.js` to import quotes from the CSV file to the database and wait for about 2-3 hours
    ```javascript
    node importQuotes.js
