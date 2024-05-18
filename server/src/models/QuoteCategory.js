@@ -4,6 +4,7 @@ const QuoteCategory = sequelize.define(
   'QuoteCategory',
   {
     // No need for any additional attributes in this table
+    // Sequalize will create QuoteId and CategoryId fields automatically
   },
   {
     indexes: [
