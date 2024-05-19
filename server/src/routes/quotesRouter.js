@@ -28,6 +28,14 @@ router.get(
   quotesController.getAllQuotes
 );
 
+// Route to get several random quotes
+router.get(
+  '/random',
+  [query('limit').optional().trim().isInt({ min: 1, max: 20 })],
+  validationErrorHandler,
+  quotesController.getRandomQuotes
+);
+
 // Route to get a specific quote by ID
 router.get(
   '/:id',
