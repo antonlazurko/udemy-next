@@ -43,22 +43,18 @@ const findQuotes = async ({ limit, offset, author, text, category }) => {
   }
 };
 
-const findRandomQuotes = async (limit) => {
-  const quotes = await Quote.findAll({
+const findRandomQuotes = async (limit) =>
+  await Quote.findAll({
     attributes,
     limit,
     order: sequelize.random(),
     include: includeCategoryConfig,
   });
-  return quotes;
-};
 
-const findSingleQuote = async (id) => {
-  const quote = await Quote.findByPk(id, {
+const findSingleQuote = async (id) =>
+  await Quote.findByPk(id, {
     attributes,
     include: includeCategoryConfig,
   });
-  return quote;
-};
 
 module.exports = { findQuotes, findRandomQuotes, findSingleQuote };
