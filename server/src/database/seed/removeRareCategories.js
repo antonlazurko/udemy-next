@@ -1,6 +1,6 @@
 // Remove from the DB all categories which appear in one or two quotes
 const { QueryTypes } = require('sequelize');
-const sequelize = require('../../config/database');
+const sequelize = require('../../config/db');
 const Category = require('../../models/Category');
 const Quote = require('../../models/Quote');
 const QuoteCategory = require('../../models/QuoteCategory');

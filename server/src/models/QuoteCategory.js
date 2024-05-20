@@ -1,4 +1,4 @@
-const sequelize = require('../config/database');
+const sequelize = require('../config/db');
 
 const QuoteCategory = sequelize.define(
   'QuoteCategory',

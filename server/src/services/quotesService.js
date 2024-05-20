@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const sequelize = require('../config/database');
+const sequelize = require('../config/db');
 const Quote = require('../models/Quote');
 const Category = require('../models/Category');
 
@@ -57,4 +57,25 @@ const findSingleQuote = async (id) =>
     include: includeCategoryConfig,
   });
 
-module.exports = { findQuotes, findRandomQuotes, findSingleQuote };
+const createQuote = async ({ text, author, categories }) => {
+  const createdQuoteId = await sequelize.transaction(async (t) => {
+    const quote = await Quote.create({ text, author }, { transaction: t });
+
+    const categoryInstances = await Promise.all(
+      categories.map((name) =>
+        Category.findOrCreate({
+          where: { name },
+          transaction: t,
+        }).then(([category]) => category)
+      )
+    );
+
+    await quote.setCategories(categoryInstances, { transaction: t });
+
+    return quote.id;
+  });
+
+  return await findSingleQuote(createdQuoteId);
+};
+
+module.exports = { findQuotes, findRandomQuotes, findSingleQuote, createQuote };

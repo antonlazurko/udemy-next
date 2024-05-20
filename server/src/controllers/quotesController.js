@@ -2,6 +2,7 @@ const {
   findQuotes,
   findRandomQuotes,
   findSingleQuote,
+  createQuote,
 } = require('../services/quotesService');
 
 const getAllQuotes = async (req, res) => {
@@ -38,4 +39,14 @@ const getQuoteById = async (req, res) => {
   }
 };
 
-module.exports = { getAllQuotes, getRandomQuotes, getQuoteById };
+const postQuote = async (req, res) => {
+  const { text, author, categories } = req.body;
+  try {
+    const quote = await createQuote({ text, author, categories });
+    res.status(200).json(quote);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { getAllQuotes, getRandomQuotes, getQuoteById, postQuote };

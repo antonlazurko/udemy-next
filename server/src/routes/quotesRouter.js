@@ -1,24 +1,13 @@
 const express = require('express');
-const { query, param } = require('express-validator');
 const router = express.Router();
 const quotesController = require('../controllers/quotesController');
 const validationErrorHandler = require('../middlewares/validationErrorHandler');
-
-const getAllQuotesValidators = [
-  query('limit').optional().trim().isInt({ min: 1, max: 50 }),
-  query('offset').optional().trim().isInt({ min: 0 }),
-  query('author').optional().trim().escape(),
-  query('text').optional().trim().escape(),
-  query('category')
-    .optional()
-    .trim()
-    .escape()
-    .custom((value) =>
-      /^[a-z\-]+$/.test(value) // Allows lowercase letters and dashes
-        ? Promise.resolve()
-        : Promise.reject('Category can only contain letters and dashes')
-    ),
-];
+const {
+  getAllQuotesValidators,
+  postQuoteValidators,
+  getRandomQuotesValidators,
+  getSingleQuoteValidators,
+} = require('../middlewares/quoteValidators');
 
 // Route to get all quotes
 router.get(
@@ -28,10 +17,18 @@ router.get(
   quotesController.getAllQuotes
 );
 
+// Route to create a new quote
+router.post(
+  '/',
+  postQuoteValidators,
+  validationErrorHandler,
+  quotesController.postQuote
+);
+
 // Route to get several random quotes
 router.get(
   '/random',
-  [query('limit').optional().trim().isInt({ min: 1, max: 20 })],
+  getRandomQuotesValidators,
   validationErrorHandler,
   quotesController.getRandomQuotes
 );
@@ -39,7 +36,7 @@ router.get(
 // Route to get a specific quote by ID
 router.get(
   '/:id',
-  [param('id').trim().isInt({ min: 1 })],
+  getSingleQuoteValidators,
   validationErrorHandler,
   quotesController.getQuoteById
 );
