@@ -1,6 +1,7 @@
 const { query, param, body } = require('express-validator');
+const { CATEGORY_NAME_REGEX } = require('./categoryValidators');
 
-const getAllQuotesValidators = [
+const getQuotesValidators = [
   query('limit').optional().trim().isInt({ min: 1, max: 50 }),
   query('offset').optional().trim().isInt({ min: 0 }),
   query('author').optional().trim().escape(),
@@ -10,9 +11,11 @@ const getAllQuotesValidators = [
     .trim()
     .escape()
     .custom((value) =>
-      /^[a-z\-]+$/.test(value) // Allows lowercase letters and dashes
+      CATEGORY_NAME_REGEX.test(value)
         ? Promise.resolve()
-        : Promise.reject('Category can only contain letters and dashes')
+        : Promise.reject(
+            'Category can only contain lowercase letters, numbers and dashes'
+          )
     ),
 ];
 
@@ -32,8 +35,10 @@ const postQuoteValidators = [
     .withMessage('Categories must be an array with at least one category'),
   body('categories.*')
     .trim()
-    .matches(/^[a-z\-]+$/)
-    .withMessage('Each category must be lowercase letters and dashes only'),
+    .matches(CATEGORY_NAME_REGEX)
+    .withMessage(
+      'Each category must contain only lowercase letters, numbers and dashes'
+    ),
 ];
 
 const getRandomQuotesValidators = [
@@ -50,7 +55,7 @@ const getSingleQuoteValidators = [quoteIdParamValidator];
 const deleteSingleQuoteValidators = [quoteIdParamValidator];
 
 module.exports = {
-  getAllQuotesValidators,
+  getQuotesValidators,
   getRandomQuotesValidators,
   getSingleQuoteValidators,
   deleteSingleQuoteValidators,

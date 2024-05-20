@@ -3,19 +3,19 @@ const router = express.Router();
 const quotesController = require('../controllers/quotesController');
 const validationErrorHandler = require('../middlewares/validationErrorHandler');
 const {
-  getAllQuotesValidators,
+  getQuotesValidators,
   postQuoteValidators,
   getRandomQuotesValidators,
   deleteSingleQuoteValidators,
   getSingleQuoteValidators,
 } = require('../middlewares/quoteValidators');
 
-// Route to get all quotes
+// Route to get multiple quotes
 router.get(
   '/',
-  getAllQuotesValidators,
+  getQuotesValidators,
   validationErrorHandler,
-  quotesController.getAllQuotes
+  quotesController.getQuotes
 );
 
 // Route to create a new quote
