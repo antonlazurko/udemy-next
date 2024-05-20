@@ -6,6 +6,7 @@ const {
   getAllQuotesValidators,
   postQuoteValidators,
   getRandomQuotesValidators,
+  deleteSingleQuoteValidators,
   getSingleQuoteValidators,
 } = require('../middlewares/quoteValidators');
 
@@ -39,6 +40,14 @@ router.get(
   getSingleQuoteValidators,
   validationErrorHandler,
   quotesController.getQuoteById
+);
+
+// Route to delete specific quote by ID
+router.delete(
+  '/:id',
+  deleteSingleQuoteValidators,
+  validationErrorHandler,
+  quotesController.deleteQuoteById
 );
 
 module.exports = router;

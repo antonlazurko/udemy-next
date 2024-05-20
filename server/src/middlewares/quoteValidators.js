@@ -40,11 +40,19 @@ const getRandomQuotesValidators = [
   query('limit').optional().trim().isInt({ min: 1, max: 20 }),
 ];
 
-const getSingleQuoteValidators = [param('id').trim().isInt({ min: 1 })];
+const quoteIdParamValidator = param('id')
+  .trim()
+  .isInt({ min: 1, max: 2147483647 })
+  .withMessage('Quote ID must be integer in the range from 1 to 2147483647');
+
+const getSingleQuoteValidators = [quoteIdParamValidator];
+
+const deleteSingleQuoteValidators = [quoteIdParamValidator];
 
 module.exports = {
   getAllQuotesValidators,
   getRandomQuotesValidators,
   getSingleQuoteValidators,
+  deleteSingleQuoteValidators,
   postQuoteValidators,
 };
