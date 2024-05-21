@@ -62,19 +62,20 @@ const deleteSingleQuote = async (id) => {
   if (count) return id;
 };
 
+const findOrCreateCategories = async (categoryNames, transaction) =>
+  await Promise.all(
+    categoryNames.map((name) =>
+      Category.findOrCreate({
+        where: { name },
+        transaction,
+      }).then(([category]) => category)
+    )
+  );
+
 const createQuote = async ({ text, author, categories }) => {
   const createdQuoteId = await sequelize.transaction(async (t) => {
     const quote = await Quote.create({ text, author }, { transaction: t });
-
-    const categoryInstances = await Promise.all(
-      categories.map((name) =>
-        Category.findOrCreate({
-          where: { name },
-          transaction: t,
-        }).then(([category]) => category)
-      )
-    );
-
+    const categoryInstances = await findOrCreateCategories(categories, t);
     await quote.setCategories(categoryInstances, { transaction: t });
 
     return quote.id;
@@ -83,10 +84,35 @@ const createQuote = async ({ text, author, categories }) => {
   return await findSingleQuote(createdQuoteId);
 };
 
+const modifySingleQuote = async (id, { text, author, categories }) => {
+  const modifiedQuoteId = await sequelize.transaction(async (t) => {
+    const quote = await Quote.findByPk(id, { transaction: t });
+
+    if (!quote) {
+      return null;
+    }
+
+    if (text) quote.text = text;
+    if (author) quote.author = author;
+
+    await quote.save({ transaction: t });
+
+    if (categories) {
+      const categoryInstances = await findOrCreateCategories(categories, t);
+      await quote.setCategories(categoryInstances, { transaction: t });
+    }
+
+    return quote.id;
+  });
+
+  return await findSingleQuote(modifiedQuoteId);
+};
+
 module.exports = {
   findQuotes,
   findRandomQuotes,
   findSingleQuote,
   createQuote,
   deleteSingleQuote,
+  modifySingleQuote,
 };

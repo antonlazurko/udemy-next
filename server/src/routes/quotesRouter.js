@@ -8,6 +8,7 @@ const {
   getRandomQuotesValidators,
   deleteSingleQuoteValidators,
   getSingleQuoteValidators,
+  patchSingleQuoteValidators,
 } = require('../middlewares/quoteValidators');
 
 // Route to get multiple quotes
@@ -48,6 +49,14 @@ router.delete(
   deleteSingleQuoteValidators,
   validationErrorHandler,
   quotesController.deleteQuoteById
+);
+
+// Route to modify specific quote by ID
+router.patch(
+  '/:id',
+  patchSingleQuoteValidators,
+  validationErrorHandler,
+  quotesController.patchQuoteById
 );
 
 module.exports = router;

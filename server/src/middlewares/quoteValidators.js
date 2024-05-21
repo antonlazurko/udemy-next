@@ -24,7 +24,7 @@ const postQuoteValidators = [
     .trim()
     .isString()
     .isLength({ min: 10 })
-    .withMessage('Text is required'),
+    .withMessage('Text is required and has to be minimum 10 characters'),
   body('author')
     .trim()
     .isString()
@@ -54,10 +54,35 @@ const getSingleQuoteValidators = [quoteIdParamValidator];
 
 const deleteSingleQuoteValidators = [quoteIdParamValidator];
 
+const patchSingleQuoteValidators = [
+  quoteIdParamValidator,
+  body('text')
+    .optional()
+    .trim()
+    .isString()
+    .isLength({ min: 10 })
+    .withMessage('Text has to be minimum 10 characters'),
+  body('author')
+    .optional()
+    .trim()
+    .isString()
+    .isLength({ min: 2, max: 255 })
+    .withMessage('Author must be a string from 2 to 255 characters'),
+  body('categories').optional().isArray({ min: 1 }),
+  body('categories.*')
+    .optional()
+    .trim()
+    .matches(CATEGORY_NAME_REGEX)
+    .withMessage(
+      'Each category must contain only lowercase letters, numbers, and dashes'
+    ),
+];
+
 module.exports = {
   getQuotesValidators,
   getRandomQuotesValidators,
   getSingleQuoteValidators,
   deleteSingleQuoteValidators,
   postQuoteValidators,
+  patchSingleQuoteValidators,
 };
