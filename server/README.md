@@ -14,6 +14,11 @@ All necessary database files are located in the `database/data`.
 1. Change directory to the `server` folder
 1. Run DB containers using `docker compose up -d`
 
+## Install NPM dependencies
+
+1. Change directory to the `server` folder
+1. Install necessary NPM dependencies `npm install`
+
 ## Run Node.js application in development mode
 
 1. Change directory to the `server` folder
@@ -36,6 +41,11 @@ All necessary database files are located in the `database/data`.
 
 1. Create `.env` file in the `server` foler
 1. Fill environment variables based on the `.env.sample` file
+
+## Install NPM dependencies
+
+1. Change directory to the `server` folder
+1. Install necessary NPM dependencies `npm install`
 
 ## Run Node.js application in production mode
 
