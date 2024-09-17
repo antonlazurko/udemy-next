@@ -1,13 +1,12 @@
-require('dotenv').config();
 const app = require('./src/app');
+const { APP_PORT } = require('./src/config/config');
 const dbInit = require('./src/config/dbInit');
 
 const startServer = async () => {
   try {
     await dbInit();
-    const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+    app.listen(APP_PORT, () => {
+      console.log(`Server is running on port ${APP_PORT}`);
     });
   } catch (error) {
     console.error('Unable to sync database:', error);

@@ -1,9 +1,10 @@
+const { DB } = require('./config');
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('db', 'admin', 'admin_password', {
-  dialect: 'postgres',
-  host: 'localhost',
-  port: 5432,
+const sequelize = new Sequelize(DB.NAME, DB.USER, DB.PASSWORD, {
+  dialect: DB.DIALECT,
+  host: DB.HOST,
+  port: DB.PORT,
   logging: false, // Set to true to log SQL queries
 });
 
