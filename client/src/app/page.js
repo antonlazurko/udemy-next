@@ -1,7 +1,12 @@
+import { QuotesList } from '@/widgets/quotes-list';
+
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-start justify-center p-24">
-      <h2 className="mt-5 text-2xl font-semibold">Quotes Next JS App</h2>
+    <div className="p-4">
+      <h1 className="text-center text-3xl mb-6 dark:text-white">
+        Quotes frontend app
+      </h1>
+      <QuotesList/>
     </div>
   );
 }
