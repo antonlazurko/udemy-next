@@ -2,7 +2,7 @@ const { query, param, body } = require('express-validator');
 const { CATEGORY_NAME_REGEX } = require('./categoryValidators');
 
 const getQuotesValidators = [
-  query('limit').optional().trim().isInt({ min: 1, max: 50 }),
+  query('limit').optional().trim().isInt({ min: 1, max: 50 }).withMessage('Limit must be an integer in the range from 1 to 50'),
   query('offset').optional().trim().isInt({ min: 0 }),
   query('author').optional().trim().escape(),
   query('text').optional().trim().escape(),
@@ -42,7 +42,7 @@ const postQuoteValidators = [
 ];
 
 const getRandomQuotesValidators = [
-  query('limit').optional().trim().isInt({ min: 1, max: 20 }),
+  query('limit').optional().trim().isInt({ min: 1, max: 20 }).withMessage('Limit must be an integer in the range from 1 to 20'),
 ];
 
 const quoteIdParamValidator = param('id')

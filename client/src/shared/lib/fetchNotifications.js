@@ -4,14 +4,10 @@
   export const fetchSuccessNotification = (successText) => {
     toast.success(successText)
   };
-  export const fetchErrorNotification = (statusText, errors = []) => {
-    if (!statusText && errors.length === 0) return;
-    const errorMessages = errors.filter(Boolean);
-    const message = <ErrorToast errors={errorMessages} />;
+  export const fetchErrorNotification = (statusText, errors) => {
+    if (!statusText && errors?.length === 0) return;
 
-    toast.error(message, {
-      data: {
-        title: statusText
-      }
-    });
+    const errorMessages = errors?.filter(Boolean);
+    const message = errorMessages?.length ? <ErrorToast errors={errorMessages} /> : statusText;
+    toast.error(message);
   };

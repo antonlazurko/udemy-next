@@ -1,0 +1,1 @@
+export const CATEGORY_REGEX = /^[a-z0-9\-]+$/;
