@@ -1,8 +1,8 @@
-import { RANDOM_QUOTES_URL } from '@/shared';
+import { QUOTES_URL } from '@/shared';
 
-export const fetchQuotes = async () => {
+export const fetchQuotesByQueryParams = async (queryString) => {
   try {
-    const response = await fetch(RANDOM_QUOTES_URL);
+    const response = await fetch(QUOTES_URL + '&' + queryString);
     if (!response.ok) {
       throw new Error(response.statusText);
     }
