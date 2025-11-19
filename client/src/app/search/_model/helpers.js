@@ -1,7 +1,8 @@
-export const createSearchQueryParams = (text, author, category) => {
+export const createSearchQueryParams = (text, author, category) => {console.log(text);
+
   const query = new URLSearchParams();
   if (text) query.append('text', text);
   if (author) query.append('author', author);
   if (category) query.append('category', category);
-  return query.toString();
+  return '&' +query.toString();
 }

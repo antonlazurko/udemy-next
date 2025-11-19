@@ -10,12 +10,8 @@ export const HomePage = () => {
 
   useEffect(() => {
     const getQuotes = async () => {
-      try {
-        const quotes = await fetchQuotes();
-        setQuotes(quotes);
-      } catch (error) {
-        console.error(error);
-      }
+      const quotes = await fetchQuotes();
+      setQuotes(quotes);
     };
     getQuotes();
   }, []);

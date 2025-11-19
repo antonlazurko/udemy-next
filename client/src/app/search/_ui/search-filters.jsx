@@ -5,21 +5,26 @@ import { Input, Button } from "@/shared";
 import { fetchQuotesByQueryParams } from '@/entities/quote/model/fetch-quotes-by-query-params';
 import { createSearchQueryParams } from '@/app/search/_model/helpers';
 
-
 export const SearchFilters = ({ setQuotes }) => {
+  const [text, setText] = useState('');
+  const [author, setAuthor] = useState('');
+  const [category, setCategory] = useState('');
 
-  const [text, setText] = useState('')
-  const [author, setAuthor] = useState('')
-  const [category, setCategory] = useState('')
-
-  const handleSearch = async() => {
-    const queryString = createSearchQueryParams(text, author, category);
+  const handleSearch = async (textVal = '', authorVal = '', categoryVal = '') => {
+    const queryString = createSearchQueryParams(textVal, authorVal, categoryVal);
     const quotes = await fetchQuotesByQueryParams(queryString);
     setQuotes(quotes);
-  }
+  };
+
+  const handleResetFilters = () => {
+    setText('');
+    setAuthor('');
+    setCategory('');
+    handleSearch();
+  };
 
   return (
-    <div className="flex gap-[30px] p-10 mb-6">
+    <div className="flex flex-col gap-2 p-4 mb-6 sm:flex-row sm:gap-2.5 sm:p-10 sm:flex-nowrap">
       <Input
         type="text"
         value={text}
@@ -33,7 +38,7 @@ export const SearchFilters = ({ setQuotes }) => {
         name="author"
         placeholder="Author"
         onChange={({ target: { value } }) => setAuthor(value)}
-        />
+      />
       <Input
         type="text"
         value={category}
@@ -41,7 +46,12 @@ export const SearchFilters = ({ setQuotes }) => {
         placeholder="Category"
         onChange={({ target: { value } }) => setCategory(value)}
       />
-      <Button onClick={handleSearch}>Search</Button>
+      <Button onClick={() => handleSearch(text, author, category)} className="sm:w-auto w-full">
+        Search
+      </Button>
+      <Button onClick={handleResetFilters} className="sm:w-auto w-full">
+        Reset
+      </Button>
     </div>
   );
-}
+};
