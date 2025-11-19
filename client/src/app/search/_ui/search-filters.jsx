@@ -8,6 +8,7 @@ export const SearchFilters = ({ setQuotes }) => {
   const [textFilter, setTextFilter] = useState({});
   const [authorFilter, setAuthorFilter] = useState({});
   const [categoryFilter, setCategoryFilter] = useState({});
+  const [limitFilter, setLimitFilter] = useState({text: "10"});
 
   return (
     <div className="flex flex-col gap-2 p-4 mb-6 sm:flex-row sm:gap-2.5 sm:p-10 sm:flex-nowrap">
@@ -35,10 +36,18 @@ export const SearchFilters = ({ setQuotes }) => {
         onChange={({ target: { value } }) => onInputChange(value, 'category', setCategoryFilter)}
         error={ categoryFilter.error}
       />
-      <Button onClick={() => handleSearch(textFilter, authorFilter, categoryFilter, setQuotes)} className="sm:w-auto w-full">
+      <Input
+        type="number"
+        value={limitFilter.text ?? ''}
+        name="limit"
+        placeholder="Limit"
+        onChange={({ target: { value } }) => onInputChange(value, 'limit', setLimitFilter)}
+        error={ limitFilter.error}
+      />
+      <Button onClick={() => handleSearch(textFilter, authorFilter, categoryFilter, limitFilter, setQuotes)} className="sm:w-auto w-full">
         Search
       </Button>
-      <Button onClick={() => handleResetFilters(setTextFilter, setAuthorFilter, setCategoryFilter, setQuotes)} className="sm:w-auto w-full" variant="secondary">
+      <Button onClick={() => handleResetFilters(setTextFilter, setAuthorFilter, setCategoryFilter, setLimitFilter, setQuotes)} className="sm:w-auto w-full" variant="secondary">
         Reset
       </Button>
     </div>
