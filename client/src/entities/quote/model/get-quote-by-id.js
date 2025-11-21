@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { QUOTES_BY_ID_URL } from '@/shared';
+import { QUOTES_URL } from '@/shared';
 
 export const getQuoteById = async (id) => {
   try {
@@ -9,7 +9,7 @@ export const getQuoteById = async (id) => {
       return {};
     }
 
-    const response = await fetch(QUOTES_BY_ID_URL + numericId, {
+    const response = await fetch(QUOTES_URL + numericId, {
       cache: "no-store",
       next: { revalidate: 0 }
     });

@@ -1,8 +1,8 @@
-import { RANDOM_QUOTES_URL, fetchSuccessNotification, fetchErrorNotification } from '@/shared';
+import { QUOTES_URL, fetchSuccessNotification, fetchErrorNotification, RANDOM_LIMIT } from '@/shared';
 
 export const getQuotes = async () => {
   try {
-    const response = await fetch(RANDOM_QUOTES_URL);
+    const response = await fetch(`${QUOTES_URL}?limit=${RANDOM_LIMIT}`);
     if (!response.ok) {
       const { errors } = await response.json();
       fetchErrorNotification(response.statusText, errors);

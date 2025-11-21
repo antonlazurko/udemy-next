@@ -1,8 +1,24 @@
 'use client';
+import Image from 'next/image';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { QuoteCategoryTag } from '@/shared';
+import { deleteQuote } from '../_model/helpers';
 export const QuotePageComponent = ({ quote }) => {
+  const router = useRouter();
   const { text, author, categories, id } = quote;
+  const onClickDelete = async () => {
+    const response = await deleteQuote(id);
+    if (!response.ok) {
+      toast.error(`Error deleting quote with id ${id}: ${response.statusText}`);
+    }
+    else {
+      toast.success(`Quote with id ${id} deleted successfully. Redirecting...`);
+      setTimeout(() => {
+        router.push('/');
+      }, 2000);
+    }
+  }
   return (
     <section className="max-w-3xl mx-auto p-6 sm:p-8 lg:p-12">
       <article className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-700 shadow-sm rounded-2xl p-6 sm:p-8 lg:p-10">
@@ -25,6 +41,14 @@ export const QuotePageComponent = ({ quote }) => {
         <div className="flex flex-wrap gap-2">
           {categories.map((category) => <QuoteCategoryTag key={category} category={category} />)}
         </div>
+        <Image
+          src="/assets/buttons/delete-icon.svg"
+          alt="Delete Quote"
+          width={24}
+          height={24}
+          className='cursor-pointer mt-4 hover:fill-red-500'
+          onClick={onClickDelete}
+        />
       </footer>
     </article>
   </section>
