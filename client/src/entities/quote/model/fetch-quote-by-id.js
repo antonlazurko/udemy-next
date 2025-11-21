@@ -9,6 +9,10 @@ export const fetchQuoteById = async (id) => {
     }
 
     const response = await fetch(QUOTES_BY_ID_URL + numericId);
+    if (response.status === 404) {
+      const error = await response.json();
+      return { error };
+    }
 
     if (!response.ok) {
       return {};

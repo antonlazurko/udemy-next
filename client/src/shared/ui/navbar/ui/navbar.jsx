@@ -12,6 +12,7 @@ export const Navbar = () => (
           alt="Logo"
           width={32}
           height={32}
+          loading="eager"
         />
       </Link>
       <ul className="flex items-center gap-6">
