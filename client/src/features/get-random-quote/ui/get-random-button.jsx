@@ -1,9 +1,9 @@
 import { Button } from '@/shared';
-import { fetchQuotes } from '@/entities/quote/model/fetch-quotes';
+import { getQuotes } from '@/entities/quote/model/get-quotes';
 
 export const GetRandomButton = ({ setQuotes }) => {
   const onRandomButtonClick = async() => {
-    const quotes = await fetchQuotes();
+    const quotes = await getQuotes();
     setQuotes(quotes);
   }
   return (<Button

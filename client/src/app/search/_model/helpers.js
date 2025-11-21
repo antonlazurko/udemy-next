@@ -1,4 +1,4 @@
-import { fetchQuotesByQueryParams } from '@/entities/quote/model/fetch-quotes-by-query-params';
+import { getQuotesByQueryParams } from '@/entities/quote/model/get-quotes-by-query-params';
 import { FILTERS_NAMES } from './constants';
 import { CATEGORY_REGEX, TEXT_TOO_SHORT_ERROR, CATEGORY_VALIDATION_ERROR, LIMIT_VALIDATION_ERROR, LIMIT_REQUIRED_ERROR } from '@/shared/constants';
 
@@ -18,7 +18,7 @@ export const handleSearch = async (textFilter = {}, authorFilter = {}, categoryF
   const queryString = createSearchQueryParams(textFilter.text, authorFilter.text, categoryFilter.text, limitFilter.text);
   if(!queryString) return
   router?.push(queryString);
-  const quotes = await fetchQuotesByQueryParams(queryString);
+  const quotes = await getQuotesByQueryParams(queryString);
   setQuotes(quotes);
 };
 

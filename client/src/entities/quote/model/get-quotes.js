@@ -1,6 +1,6 @@
 import { RANDOM_QUOTES_URL, fetchSuccessNotification, fetchErrorNotification } from '@/shared';
 
-export const fetchQuotes = async () => {
+export const getQuotes = async () => {
   try {
     const response = await fetch(RANDOM_QUOTES_URL);
     if (!response.ok) {

@@ -1,4 +1,4 @@
-import { fetchQuoteById } from '@/entities/quote/model/fetch-quote-by-id';
+import { fetchQuoteById } from '@/entities/quote/model/get-quote-by-id';
 import { QuotePageComponent } from './_ui/quote-page-component';
 
 export default async function QuotePage({ params }) {

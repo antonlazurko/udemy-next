@@ -1,6 +1,6 @@
 import { QUOTES_URL, fetchSuccessNotification, fetchErrorNotification } from '@/shared';
 
-export const fetchQuotesByQueryParams = async (queryString = '') => {
+export const getQuotesByQueryParams = async (queryString = '') => {
   try {
     const response = await fetch(QUOTES_URL + queryString);
     if (!response.ok) {

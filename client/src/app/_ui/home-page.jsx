@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { fetchQuotes } from '@/entities/quote/model/fetch-quotes';
+import { getQuotes } from '@/entities/quote/model/get-quotes';
 import { QuotesList } from '@/widgets/quotes-list';
 import { GetRandomButton } from '@/features/get-random-quote/ui/get-random-button';
 import { PageTitle } from '@/shared';
@@ -10,7 +10,7 @@ export const HomePage = () => {
 
   useEffect(() => {
     const getQuotes = async () => {
-      const quotes = await fetchQuotes();
+      const quotes = await getQuotes();
       setQuotes(quotes);
     };
     getQuotes();

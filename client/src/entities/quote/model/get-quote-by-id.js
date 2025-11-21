@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { QUOTES_BY_ID_URL } from '@/shared';
 
-export const fetchQuoteById = async (id) => {
+export const getQuoteById = async (id) => {
   try {
     const numericId = Number(id);
 
