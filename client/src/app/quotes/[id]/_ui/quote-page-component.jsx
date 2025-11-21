@@ -1,7 +1,7 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { QuoteCategoryTag } from '@/shared';
 export const QuotePageComponent = ({ quote }) => {
-
   const { text, author, categories, id } = quote;
   return (
     <section className="max-w-3xl mx-auto p-6 sm:p-8 lg:p-12">

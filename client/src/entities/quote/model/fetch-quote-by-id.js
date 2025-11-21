@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { QUOTES_BY_ID_URL } from '@/shared';
 
 export const fetchQuoteById = async (id) => {
@@ -8,19 +9,17 @@ export const fetchQuoteById = async (id) => {
       return {};
     }
 
-    const response = await fetch(QUOTES_BY_ID_URL + numericId);
-    if (response.status === 404) {
-      const error = await response.json();
-      return { error };
-    }
-
+    const response = await fetch(QUOTES_BY_ID_URL + numericId, {
+      cache: "no-store",
+      next: { revalidate: 0 }
+    });
     if (!response.ok) {
-      return {};
+      throw new Error(response.statusText);
     }
 
     const quote = await response.json();
     return quote ?? {};
   } catch (error) {
-    return {};
+    notFound();
   }
 };

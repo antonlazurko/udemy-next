@@ -13,10 +13,11 @@ export const createSearchQueryParams = (text, author, category, limit) => {
 
 export const isFiltersNotValid = (textFilter, authorFilter, categoryFilter, limitFilter) => textFilter.error || authorFilter.error || categoryFilter.error || limitFilter.error;
 
-export const handleSearch = async (textFilter = {}, authorFilter = {}, categoryFilter = {}, limitFilter = {}, setQuotes) => {
+export const handleSearch = async (textFilter = {}, authorFilter = {}, categoryFilter = {}, limitFilter = {}, setQuotes, router) => {
   if(isFiltersNotValid(textFilter, authorFilter, categoryFilter, limitFilter)) return
   const queryString = createSearchQueryParams(textFilter.text, authorFilter.text, categoryFilter.text, limitFilter.text);
   if(!queryString) return
+  router?.push(queryString);
   const quotes = await fetchQuotesByQueryParams(queryString);
   setQuotes(quotes);
 };

@@ -1,6 +1,6 @@
 'use client';
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 
 export const NotFoundPageComponent = () => {
@@ -17,7 +17,7 @@ export const NotFoundPageComponent = () => {
         </div>
 
         <h2 className="mt-4 text-2xl font-semibold text-white/90">
-          {`Oops… Looks like you took a path ${queryString ? `to "${queryString.toUpperCase()}` : ''}" that doesn't exist 🤔`}
+          {`Oops… Looks like you took a path${queryString ? ` to "${queryString.toUpperCase()}` : ''}" that doesn't exist 🤔`}
         </h2>
 
         <p className="mt-3 text-white/80">

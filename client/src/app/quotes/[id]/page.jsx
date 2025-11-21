@@ -1,13 +1,10 @@
-import { notFound } from "next/navigation";
-
 import { fetchQuoteById } from '@/entities/quote/model/fetch-quote-by-id';
-import { QuotePageComponent } from './_ui/QuotePageComponent';
+import { QuotePageComponent } from './_ui/quote-page-component';
 
 export default async function QuotePage({ params }) {
-  const { id } = await params;
+  const resolvedParams = await params;
+  const { id } = resolvedParams;
   const quote = await fetchQuoteById(id);
-
-  if (!quote?.id || quote.error) notFound();
 
   return <QuotePageComponent quote={quote} />;
 }
