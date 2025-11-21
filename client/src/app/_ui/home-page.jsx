@@ -9,11 +9,11 @@ export const HomePage = () => {
   const [quotes, setQuotes] = useState([]);
 
   useEffect(() => {
-    const getQuotes = async () => {
+    const getRandomQuotes = async () => {
       const quotes = await getQuotes();
       setQuotes(quotes);
     };
-    getQuotes();
+    getRandomQuotes();
   }, []);
 
   return (

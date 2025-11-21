@@ -15,7 +15,7 @@ export const Navbar = () => (
           loading="eager"
         />
       </Link>
-      <ul className="flex items-center gap-6">
+      <ul className="flex items-center gap-10">
         <li>
           <Link
             href="/search"
@@ -26,10 +26,10 @@ export const Navbar = () => (
         </li>
         <li>
           <Link
-            href="/quotes"
+            href="/quotes/create"
             className="text-gray-700 hover:text-blue-600 transition"
           >
-            Quotes
+            Create Quote
           </Link>
         </li>
         <li>

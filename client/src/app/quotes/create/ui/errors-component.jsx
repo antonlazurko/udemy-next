@@ -1,0 +1,1 @@
+export const ErrorsComponent = ({ errors }) => errors.map( msg => (<p key={msg} className="text-red-500 text-sm">{msg}</p>));
