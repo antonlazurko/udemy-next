@@ -1,9 +1,9 @@
 import { QUOTES_URL } from "@/shared";
 
-export async function postQuote({ text, author, categories }) {
+export async function patchQuote({ editQuoteId, text, author, categories }) {
   try {
-    const res = await fetch(QUOTES_URL, {
-      method: 'POST',
+    const res = await fetch(QUOTES_URL + '/' + editQuoteId, {
+      method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         text,

@@ -19,6 +19,11 @@ export const QuotePageComponent = ({ quote }) => {
       }, 2000);
     }
   }
+
+  const onClickEdit = (id) => {
+    router.push(`/quotes/modify/${id}`);
+  }
+
   return (
     <section className="max-w-3xl mx-auto p-6 sm:p-8 lg:p-12">
       <article className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-700 shadow-sm rounded-2xl p-6 sm:p-8 lg:p-10">
@@ -48,6 +53,14 @@ export const QuotePageComponent = ({ quote }) => {
           height={24}
           className='cursor-pointer mt-4 hover:fill-red-500'
           onClick={onClickDelete}
+        />
+        <Image
+          src="/assets/buttons/edit-pen.svg"
+          alt="Delete Quote"
+          width={24}
+          height={24}
+          className='cursor-pointer mt-4 hover:fill-red-500'
+          onClick={() => onClickEdit(id)}
         />
       </footer>
     </article>

@@ -26,7 +26,7 @@ export const Navbar = () => (
         </li>
         <li>
           <Link
-            href="/quotes/create"
+            href="/quotes/modify"
             className="text-gray-700 hover:text-blue-600 transition"
           >
             Create Quote

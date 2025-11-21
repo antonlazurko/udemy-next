@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 
 import { postQuote } from '@/entities/quote/model/post-quote';
+import { patchQuote } from '@/entities/quote/model/patch-quote';
 import { Button, Input } from "@/shared";
 import { ErrorsComponent } from "./errors-component";
 
@@ -15,12 +16,13 @@ const quoteSchema = zod.object({
   categories: zod.array(zod.string()).min(1, "Categories must contain at least one item")
 });
 
-export function CreateQuotePageComponent() {
+export function ModifyQuotePageComponent({ editQuote }) {
+
   const router = useRouter()
 
-  const [text, setText] = useState('');
-  const [author, setAuthor] = useState('');
-  const [categories, setCategories] = useState('');
+  const [text, setText] = useState(editQuote?.text || '');
+  const [author, setAuthor] = useState(editQuote?.author || '');
+  const [categories, setCategories] = useState(editQuote?.categories?.join(', ') || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -48,13 +50,10 @@ export function CreateQuotePageComponent() {
     }
 
     try {
-      const quote = await postQuote({
-        text,
-        author,
-        categories: categoriesArray
-      });
+      const quote = editQuote ? await patchQuote({ editQuoteId: editQuote.id, text, author, categories: categoriesArray }) :
+        await postQuote({ text, author, categories: categoriesArray });
 
-      toast.success(`Quote #${quote.id} created successfully! Redirecting...`);
+      toast.success(`Quote #${quote.id} modified successfully! Redirecting...`);
       router.push('/quotes/' + quote.id);
     } catch (err) {
       setError(err);
@@ -64,7 +63,7 @@ export function CreateQuotePageComponent() {
 
   return (
     <section className="max-w-3xl mx-auto p-6 sm:p-8 lg:p-12">
-      <h1 className="text-center text-3xl mb-6 dark:text-white">Create a new quote</h1>
+      <h1 className="text-center text-3xl mb-6 dark:text-white">{`${editQuote?.id ? `Modify quote #${editQuote.id}` : 'Create a new quote'}`}</h1>
       <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-6 flex flex-col gap-4">
         <Input
           type="text"
@@ -98,7 +97,7 @@ export function CreateQuotePageComponent() {
           type="submit"
           disabled={loading}
           >
-          {loading ? "Creating..." : "Create quote"}
+          {loading ? "Loading..." : editQuote?.id ? "Modify quote" : "Create quote"}
         </Button>
 
         {error?.general && <ErrorsComponent errors={error.general} />}
