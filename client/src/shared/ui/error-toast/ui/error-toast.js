@@ -3,7 +3,7 @@ export const ErrorToast = ({ errors = [] }) => (
     <p className="font-semibold mb-2">Errors:</p>
     <ul className="list-disc list-inside space-y-1">
       {errors.map(({ value, msg, path }) => (
-        <li key={value}>
+        <li key={msg}>
           <span className="font-medium">{path}</span>{value && <span className="italic"> - {value}</span>}: {msg}
         </li>
       ))}

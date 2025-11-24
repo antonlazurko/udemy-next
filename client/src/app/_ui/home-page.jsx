@@ -17,7 +17,7 @@ export const HomePage = () => {
         throw errors
       }
       setQuotes(quotes);
-    } catch (errors) {
+    } catch ({errors}) {
       fetchErrorNotification(errors)
     }
   };

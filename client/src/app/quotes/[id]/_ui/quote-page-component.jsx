@@ -1,31 +1,9 @@
-'use client';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { QuoteCategoryTag } from '@/shared';
-import { deleteQuoteById } from '@/entities/quote/model/delete-quote-by-id';
-import { fetchErrorNotification, fetchSuccessNotification } from '@/shared';
+import { DeleteButtonComponent } from './delete-button-component';
+import { EditButtonComponent } from './edit-button-component';
 
 export const QuotePageComponent = ({ quote }) => {
-  const router = useRouter();
   const { text, author, categories, id } = quote;
-  const onClickDelete = async () => {
-    try {
-      const { ok, errors } = await deleteQuoteById(id);
-      if (!ok) {
-        throw errors
-      }
-
-      fetchSuccessNotification(`Quote #${id} deleted successfully! Redirecting...`);
-      setTimeout(() => {
-        router.push('/');
-      }, 2000);
-    } catch (errors) {
-      fetchErrorNotification(errors)
-    }
-  };
-  const onClickEdit = (id) => {
-    router.push(`/quotes/modify/${id}`);
-  }
 
   return (
     <section className="max-w-3xl mx-auto p-6 sm:p-8 lg:p-12">
@@ -49,22 +27,8 @@ export const QuotePageComponent = ({ quote }) => {
         <div className="flex flex-wrap gap-2">
           {categories.map((category) => <QuoteCategoryTag key={category} category={category} />)}
         </div>
-        <Image
-          src="/assets/buttons/delete-icon.svg"
-          alt="Delete Quote"
-          width={24}
-          height={24}
-          className='cursor-pointer mt-4 hover:fill-red-500'
-          onClick={onClickDelete}
-        />
-        <Image
-          src="/assets/buttons/edit-pen.svg"
-          alt="Delete Quote"
-          width={24}
-          height={24}
-          className='cursor-pointer mt-4 hover:fill-red-500'
-          onClick={() => onClickEdit(id)}
-        />
+        <DeleteButtonComponent id={id}/>
+        <EditButtonComponent id={id}/>
       </footer>
     </article>
   </section>
