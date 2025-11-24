@@ -50,13 +50,15 @@ export function ModifyQuotePageComponent({ editQuote }) {
     }
 
     try {
-      const quote = editQuote ? await patchQuote({ editQuoteId: editQuote.id, text, author, categories: categoriesArray }) :
+      const {ok, data, errors} = editQuote ? await patchQuote({ editQuoteId: editQuote.id, text, author, categories: categoriesArray }) :
         await postQuote({ text, author, categories: categoriesArray });
-
-      toast.success(`Quote #${quote.id} modified successfully! Redirecting...`);
-      router.push('/quotes/' + quote.id);
-    } catch (err) {
-      setError(err);
+      if (!ok) {
+        throw errors;
+      }
+      toast.success(`Quote #${data?.id} modified successfully! Redirecting...`);
+      router.push('/quotes/' + data?.id);
+    } catch (errors) {
+      setError(errors);
       setLoading(false);
     }
   };

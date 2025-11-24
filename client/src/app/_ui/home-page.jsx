@@ -4,15 +4,23 @@ import { getQuotes } from '@/entities/quote/model/get-quotes';
 import { QuotesList } from '@/widgets/quotes-list';
 import { GetRandomButton } from '@/features/get-random-quote/ui/get-random-button';
 import { PageTitle } from '@/shared';
+import { fetchErrorNotification } from '@/shared';
 
 export const HomePage = () => {
   const [quotes, setQuotes] = useState([]);
 
   useEffect(() => {
     const getRandomQuotes = async () => {
-      const quotes = await getQuotes();
+    try {
+      const { data : quotes, ok, errors } = await getQuotes();
+      if (!ok) {
+        throw errors
+      }
       setQuotes(quotes);
-    };
+    } catch (errors) {
+      fetchErrorNotification(errors)
+    }
+  };
     getRandomQuotes();
   }, []);
 

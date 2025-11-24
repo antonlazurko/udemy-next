@@ -4,7 +4,7 @@ export const ErrorToast = ({ errors = [] }) => (
     <ul className="list-disc list-inside space-y-1">
       {errors.map(({ value, msg, path }) => (
         <li key={value}>
-          <span className="font-medium">{path}</span> - <span className="italic">{value}</span>: {msg}
+          <span className="font-medium">{path}</span>{value && <span className="italic"> - {value}</span>}: {msg}
         </li>
       ))}
     </ul>

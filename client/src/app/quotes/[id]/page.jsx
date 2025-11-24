@@ -23,7 +23,8 @@ export async function generateMetadata({ params }) {
 export default async function QuotePage({ params }) {
   const resolvedParams = await params;
   const { id } = resolvedParams;
-  const quote = await getQuoteById(id);
+  const { ok, data} = await getQuoteById(id);
 
-  return quote?.id ? <QuotePageComponent quote={quote} /> : notFound();;
+  return ok ? <QuotePageComponent quote={data} /> : notFound();
+
 }

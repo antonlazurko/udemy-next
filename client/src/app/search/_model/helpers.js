@@ -1,6 +1,7 @@
 import { getQuotesByQueryParams } from '@/entities/quote/model/get-quotes-by-query-params';
 import { FILTERS_NAMES } from './constants';
 import { CATEGORY_REGEX, TEXT_TOO_SHORT_ERROR, CATEGORY_VALIDATION_ERROR, LIMIT_VALIDATION_ERROR, LIMIT_REQUIRED_ERROR } from '@/shared/constants';
+import { fetchErrorNotification } from '@/shared';
 
 export const createSearchQueryParams = (text, author, category, limit) => {
   const query = new URLSearchParams();
@@ -18,8 +19,15 @@ export const handleSearch = async (textFilter = {}, authorFilter = {}, categoryF
   const queryString = createSearchQueryParams(textFilter.text, authorFilter.text, categoryFilter.text, limitFilter.text);
   if(!queryString) return
   router?.push(queryString);
-  const quotes = await getQuotesByQueryParams(queryString);
-  setQuotes(quotes);
+  try {
+    const { data : quotes, ok, errors } = await getQuotesByQueryParams(queryString);
+    if (!ok) {
+      throw errors
+    }
+    setQuotes(quotes);
+  } catch (errors) {
+    fetchErrorNotification(errors)
+  }
 };
 
 export const handleResetFilters = (setTextFilter, setAuthorFilter, setCategoryFilter, setLimitFilter, setQuotes) => {
@@ -44,7 +52,7 @@ const validateFilter = (name, value) => {
     case FILTERS_NAMES.limit:
       if (value === '') return LIMIT_REQUIRED_ERROR;
       const n = Number(value);
-      return n < 1 || n > 50 ? LIMIT_VALIDATION_ERROR : null;
+      return n < 1 || n > 500 ? LIMIT_VALIDATION_ERROR : null;
 
     default:
       return null;

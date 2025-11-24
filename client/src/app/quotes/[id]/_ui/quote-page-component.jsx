@@ -1,25 +1,28 @@
 'use client';
 import Image from 'next/image';
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { QuoteCategoryTag } from '@/shared';
-import { deleteQuote } from '../_model/helpers';
+import { deleteQuoteById } from '@/entities/quote/model/delete-quote-by-id';
+import { fetchErrorNotification, fetchSuccessNotification } from '@/shared';
+
 export const QuotePageComponent = ({ quote }) => {
   const router = useRouter();
   const { text, author, categories, id } = quote;
   const onClickDelete = async () => {
-    const response = await deleteQuote(id);
-    if (!response.ok) {
-      toast.error(`Error deleting quote with id ${id}: ${response.statusText}`);
-    }
-    else {
-      toast.success(`Quote with id ${id} deleted successfully. Redirecting...`);
+    try {
+      const { ok, errors } = await deleteQuoteById(id);
+      if (!ok) {
+        throw errors
+      }
+
+      fetchSuccessNotification(`Quote #${id} deleted successfully! Redirecting...`);
       setTimeout(() => {
         router.push('/');
       }, 2000);
+    } catch (errors) {
+      fetchErrorNotification(errors)
     }
-  }
-
+  };
   const onClickEdit = (id) => {
     router.push(`/quotes/modify/${id}`);
   }

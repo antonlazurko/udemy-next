@@ -1,6 +1,3 @@
-import { QUOTES_URL } from '@/shared';
-export const deleteQuoteById = (id) => {
-  return fetch(`${QUOTES_URL}${id}`, {
-    method: 'DELETE'
-  })
-}
+import { api } from '@/shared/api/base-api';
+
+export const deleteQuoteById = (id) => api.delete(`/quotes/${id}`);
