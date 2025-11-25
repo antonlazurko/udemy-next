@@ -11,8 +11,6 @@ export const GetRandomButton = ({ setQuotes }) => {
       }
       setQuotes(quotes);
     } catch ({errors}) {
-      console.log(errors);
-
       fetchErrorNotification(errors)
     }
   }

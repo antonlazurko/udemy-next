@@ -12,30 +12,21 @@ export const createSearchQueryParams = (text, author, category, limit) => {
   return query.size ? '?' + query.toString() : '';
 }
 
-export const isFiltersNotValid = (textFilter, authorFilter, categoryFilter, limitFilter) => textFilter.error || authorFilter.error || categoryFilter.error || limitFilter.error;
+export const isFiltersValid = (textFilter, authorFilter, categoryFilter, limitFilter) => !(
+  textFilter.error || authorFilter.error || categoryFilter.error || limitFilter.error
+);
 
-export const handleSearch = async (textFilter = {}, authorFilter = {}, categoryFilter = {}, limitFilter = {}, setQuotes, router) => {
-  if(isFiltersNotValid(textFilter, authorFilter, categoryFilter, limitFilter)) return
-  const queryString = createSearchQueryParams(textFilter.text, authorFilter.text, categoryFilter.text, limitFilter.text);
-  if(!queryString) return
+
+export const handleSearch = async (queryString, setQuotes) => {
   try {
     const { data : quotes, ok, errors } = await getQuotesByQueryParams(queryString);
     if (!ok) {
       throw errors
     }
     setQuotes(quotes);
-    router?.push(queryString);
   } catch (errors) {
     fetchErrorNotification(errors)
   }
-};
-
-export const handleResetFilters = (setTextFilter, setAuthorFilter, setCategoryFilter, setLimitFilter, setQuotes) => {
-  setTextFilter({});
-  setAuthorFilter({});
-  setCategoryFilter({});
-  setLimitFilter({});
-  setQuotes([]);
 };
 
 const validateFilter = (name, value) => {

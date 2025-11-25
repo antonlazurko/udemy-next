@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { Input, Button } from "@/shared";
-import { handleResetFilters, handleSearch, onInputChange } from '@/app/search/_model/helpers';
+import { handleSearch, onInputChange, isFiltersValid, createSearchQueryParams } from '@/app/search/_model/helpers';
 
 export const SearchFilters = ({ setQuotes }) => {
   const searchParams = useSearchParams();
@@ -15,11 +15,20 @@ export const SearchFilters = ({ setQuotes }) => {
   const [limitFilter, setLimitFilter] = useState({text: '10'});
 
   const onSearchButtonClick = () => {
-    handleSearch(textFilter, authorFilter, categoryFilter, limitFilter, setQuotes, router);
+    if(!isFiltersValid(textFilter, authorFilter, categoryFilter, limitFilter)) return
+    const queryString = createSearchQueryParams(textFilter.text, authorFilter.text, categoryFilter.text, limitFilter.text);
+
+    if (!queryString) return
+    handleSearch(queryString, setQuotes);
+    router.push(queryString);
   }
 
   const onResetButtonClick = () => {
-    handleResetFilters(setTextFilter, setAuthorFilter, setCategoryFilter, setLimitFilter, setQuotes);
+    setTextFilter({});
+    setAuthorFilter({});
+    setCategoryFilter({});
+    setLimitFilter({});
+    setQuotes([]);
     router.push(path);
   }
 
@@ -29,11 +38,19 @@ export const SearchFilters = ({ setQuotes }) => {
       const initAuthor = searchParams.get('author') ?? '';
       const initCategory = searchParams.get('category') ?? '';
       const initLimit = searchParams.get('limit') ?? '10';
+
       setTextFilter({ text: initText });
       setAuthorFilter({ text: initAuthor });
       setCategoryFilter({ text: initCategory });
       setLimitFilter({ text: initLimit });
-      handleSearch(textFilter, authorFilter, { text: searchParams.get('category') }, limitFilter, setQuotes);
+      if(!isFiltersValid(textFilter, authorFilter, categoryFilter, limitFilter)) return
+      const queryString = createSearchQueryParams(initText, initAuthor, initCategory, initLimit);
+      if (!queryString) return
+
+      handleSearch(
+        queryString,
+        setQuotes
+      );
     }
   }, [searchParams]);
 
