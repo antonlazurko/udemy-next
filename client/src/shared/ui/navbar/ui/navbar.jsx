@@ -4,14 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 
 export const Navbar = () => (
-  <nav className="w-full bg-white border-b border-gray-200 px-6 py-3">
+  <nav className="w-full bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300">
     <div className="max-w-6xl mx-auto flex items-center justify-between">
-      <Link href="/" className="text-xl font-bold text-gray-900">
+      <Link href="/">
         <Image
           src="/assets/logo/logo.svg"
           alt="Logo"
-          width={32}
-          height={32}
+          width={200}
+          height={200}
           loading="eager"
         />
       </Link>
@@ -19,25 +19,31 @@ export const Navbar = () => (
         <li>
           <Link
             href="/search"
-            className="text-gray-700 hover:text-blue-600 transition"
+            className="text-gray-700 hover:text-blue-600 hover:scale-110 transition flex items-center gap-1"
           >
+            <Image
+              src="/assets/icons/search-icon.svg"
+              alt="Logo"
+              width={32}
+              height={32}
+              loading="eager"
+            />
             Search
           </Link>
         </li>
         <li>
           <Link
             href="/quotes/modify"
-            className="text-gray-700 hover:text-blue-600 transition"
+            className="text-gray-700 hover:text-blue-600 hover:scale-110 transition flex items-center gap-1"
           >
+            <Image
+              src="/assets/icons/create-icon.svg"
+              alt="Logo"
+              width={32}
+              height={32}
+              loading="eager"
+            />
             Create Quote
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/about"
-            className="text-gray-700 hover:text-blue-600 transition"
-          >
-            About
           </Link>
         </li>
       </ul>
