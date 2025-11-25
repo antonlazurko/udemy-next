@@ -9,10 +9,10 @@ export const SearchFilters = ({ setQuotes }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const path = usePathname();
-  const [textFilter, setTextFilter] = useState({text: searchParams.get('text') ?? ''});
-  const [authorFilter, setAuthorFilter] = useState({ text: searchParams.get('author') ?? '' });
-  const [categoryFilter, setCategoryFilter] = useState({ text: searchParams.get('category') ?? '' });
-  const [limitFilter, setLimitFilter] = useState({text: searchParams.get('limit') ?? '10'});
+  const [textFilter, setTextFilter] = useState({});
+  const [authorFilter, setAuthorFilter] = useState({});
+  const [categoryFilter, setCategoryFilter] = useState({});
+  const [limitFilter, setLimitFilter] = useState({text: '10'});
 
   const onSearchButtonClick = () => {
     handleSearch(textFilter, authorFilter, categoryFilter, limitFilter, setQuotes, router);
@@ -25,9 +25,17 @@ export const SearchFilters = ({ setQuotes }) => {
 
   useEffect(() => {
     if (searchParams.size) {
-      handleSearch(textFilter, authorFilter, categoryFilter, limitFilter, setQuotes)
+      const initText = searchParams.get('text') ?? '';
+      const initAuthor = searchParams.get('author') ?? '';
+      const initCategory = searchParams.get('category') ?? '';
+      const initLimit = searchParams.get('limit') ?? '10';
+      setTextFilter({ text: initText });
+      setAuthorFilter({ text: initAuthor });
+      setCategoryFilter({ text: initCategory });
+      setLimitFilter({ text: initLimit });
+      handleSearch(textFilter, authorFilter, { text: searchParams.get('category') }, limitFilter, setQuotes);
     }
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className="flex flex-col gap-2 p-4 mb-6 sm:flex-row sm:gap-2.5 sm:p-10 sm:flex-nowrap">

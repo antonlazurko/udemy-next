@@ -18,13 +18,13 @@ export const handleSearch = async (textFilter = {}, authorFilter = {}, categoryF
   if(isFiltersNotValid(textFilter, authorFilter, categoryFilter, limitFilter)) return
   const queryString = createSearchQueryParams(textFilter.text, authorFilter.text, categoryFilter.text, limitFilter.text);
   if(!queryString) return
-  router?.push(queryString);
   try {
     const { data : quotes, ok, errors } = await getQuotesByQueryParams(queryString);
     if (!ok) {
       throw errors
     }
     setQuotes(quotes);
+    router?.push(queryString);
   } catch (errors) {
     fetchErrorNotification(errors)
   }

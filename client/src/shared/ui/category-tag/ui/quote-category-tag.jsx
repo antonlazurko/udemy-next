@@ -1,8 +1,11 @@
+import Link from 'next/link';
+
 export const QuoteCategoryTag = ({ category }) => (
-  <span
+  <Link
+    href={`/search?category=${category}`}
     key={category}
-    className="text-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full mr-2 mb-2"
+    className="text-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full mr-2 mb-2 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
   >
     {category}
-  </span>
+  </Link>
 )
