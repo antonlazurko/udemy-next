@@ -18,6 +18,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
+      - name: Verify Vercel Token
+        run: vercel whoami --token=${{ secrets.VERCEL_TOKEN }}
       - name: Pull Vercel Environment Information (Client)
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
         working-directory: ./client
