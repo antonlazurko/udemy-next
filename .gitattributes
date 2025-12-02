@@ -1,0 +1,2 @@
+server/database/data/quotes.csv filter=lfs diff=lfs merge=lfs -text
+server/src/database/data/db-without-rare-categories.sql.gz filter=lfs diff=lfs merge=lfs -text
