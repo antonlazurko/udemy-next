@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 
 export const Navbar = () => {
   const pathName = usePathname();
-  const isActive = (href) => pathName === href ? "text-blue-600 font-semibold underline" : ""
+  const isActive = (href) => pathName.includes(href) ? "text-blue-600 font-semibold underline" : ""
 
   return (
   <nav className="w-full bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300">
@@ -21,6 +21,19 @@ export const Navbar = () => {
         />
       </Link>
       <ul className="flex items-center gap-10">
+        <li>
+          <Link href="/quotes"
+            className={`text-gray-700 hover:text-blue-600 hover:scale-110 transition flex items-center gap-1 ${ isActive("/quotes")}`}>
+            <Image
+              src="/assets/icons/quotes-icon.svg"
+              alt="Quotes"
+              width={32}
+              height={32}
+              loading="eager"
+            />
+            Quotes Page
+          </Link>
+        </li>
         <li>
           <Link
             href="/search"

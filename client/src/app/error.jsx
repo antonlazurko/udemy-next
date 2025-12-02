@@ -1,6 +1,5 @@
 'use client';
 export default function ErrorPage ({ error, reset }) {
-  console.log(error)
   return (
     <div className="flex flex-col items-center justify-center h-full p-4">
       <h1 className="text-2xl font-bold mb-4">Something went wrong!</h1>

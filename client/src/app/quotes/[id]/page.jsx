@@ -4,9 +4,9 @@ import { QuotePageComponent } from './_ui/quote-page-component';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const quote = await getQuoteById(id);
+  const { ok, data} = await getQuoteById(id);
 
-  if (!quote?.id) {
+  if (!data?.id) {
     return {
       title: 'Quote Not Found',
       description: 'The quote you are looking for does not exist.'
@@ -14,8 +14,8 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: `Quote #${quote.id} by ${quote.author || 'Unknown'}`,
-    description: quote.text
+    title: `Quote #${data.id} by ${data.author || 'Unknown'}`,
+    description: data.text
   };
 }
 
